@@ -1,0 +1,136 @@
+swagger: '2.0'
+info:
+  title: Applicazione università
+  description: definizione API applicazione
+  version: "1.0.0"
+# the domain of the service
+host: aggiungere_link_server_di_heroku
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+# the APIs
+paths:
+  /login_check:
+    post:
+      summary: controllo stato utente
+      description: verificare se l'utente ha fatto il login
+      responses:
+        200:
+          description: check avvenuto con successo
+
+  /registrazione:
+    post:
+      summary: registra utente
+      description: richiesti i parametri name, surname, email e password per registrazione nuovo utente
+      parameters:
+        - $ref: "#/parameters/nameUser"
+        - $ref: "#/parameters/surnameUser"
+        - $ref: "#/parameters/emailUser"
+        - $ref: "#/parameters/passwordUser"
+      responses:
+        200:
+          description: utente registrato
+        406:
+          description: parametro tra name, surname, email o password non viene spedito
+          
+  /login:
+    post:
+      summary: login utente
+      description: richiesti i parametri email e password per effettuare il login 
+      parameters:
+        - $ref: "#/parameters/emailUser"
+        - $ref: "#/parameters/passwordUser"
+      responses:
+        200:
+          description: utente loggato correttamente
+        406:
+          description: parametro tra email o password non viene spedito
+          
+  /exit:
+    post:
+      summary: logOut utente
+      description: utente effettua il logOut
+      responses:
+        200:
+          description: utente sloggato correttamente
+          
+  /add_check_petizioni:
+    post:
+      summary: check petizioni
+      description: utente può aderire alla petizione oppure ritirarsi 
+      parameters:
+        - $ref: "#/parameters/petTitle"
+      responses:
+        200:
+          description: partecipazione alla petizione registrata
+        406:
+          description: parametro title non viene spedito
+
+  /add_petizione:
+    post:
+      summary: aggiunta petizione
+      description: richiesti title, description, type per aggiunge una nuova petizione
+      parameters:
+        - $ref: "#/parameters/petTitle"
+        - name: description
+          in: formData
+          description: descrizione della petizione
+          required: true
+          type: string
+        - name: type
+          in: formData
+          description: tipo della petizione
+          required: true
+          type: string
+      responses:
+        200:
+          description: petizione aggiunta correttamente
+        406:
+          description: parametro tra title, description o type non viene spedito
+
+  /load_petizioni:
+    post:
+      summary: caricamento petizioni
+      description: carica tutte le petizioni inserite 
+      responses:
+        200:
+          description: petizioni caricate con successo
+
+
+parameters:
+  nameUser:
+    name: name
+    in: formData
+    description: nome dell'user
+    required: true
+    type: string
+  surnameUser:
+    name: surname
+    in: formData
+    description: cognome dell'user
+    required: true
+    type: string
+  emailUser:
+    name: email
+    in: formData
+    description: email dell'user
+    required: true
+    type: string
+  passwordUser:
+    name: password
+    in: formData
+    description: password dell'user
+    required: true
+    type: string
+  petTitle:
+    name: title
+    in: formData
+    description: titolo della petizione
+    required: true
+    type: string
