@@ -1,0 +1,16 @@
+.colonna2{
+    background-color: rgba(255, 255, 255, 0.80);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #000000;
+}
+
+.color-bg{
+    background-color: #99ccff;
+}
