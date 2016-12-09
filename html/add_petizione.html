@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" />   
+    <link rel="stylesheet" href="../style/style_petizioni.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>AddPetizioni</title>
+</head>
+<body>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-2 col-xs-1"></div>
+            <div class="col-md-6 col-sm-8 col-xs-10 colonna2">
+                <br>
+
+                <div class="row">
+                    <div class="col-md-2 text-center">
+                        <button type="button" class="btn btn-md btn-default"><a href="./petizioni.html">Torna indietro</a></button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1><b>Aggiungi petizione</b></h1>
+                    </div>
+                </div>
+
+                <hr align=”left” size=”1″ width=”300″ style="border-top-color: grey;" noshade>
+
+                <form action="http://127.0.0.1:5000/" id="registrationeForm" method="post">
+                    <label>Titolo:</label>
+                    <input class="form-control" name="title" id="title" placeholder="Titolo Petizione"><br>
+                    <label>Descrizione:</label>
+                    <input class="form-control" name="description" id="description" placeholder="Descrizione Petizione"><br>
+                    <div class="radio">
+                        <label><input type="checkbox"  name="universita" id="universita" value="Università"> Università</label><br>
+                        <label><input type="checkbox"  name="citta" id="citta" value="Città"> Città</label>
+                    </div>
+                    <br>
+                  <button type="button" class="btn btn-success" onclick="add_petizione()">Ok</button><br>
+                </form>
+                <br>
+            </div>
+            <div class="col-md-3 col-sm-2 col-xs-1"></div>
+        </div>
+        <br>
+    </div>    
+    <script src="../script/script_addPetizioni.js"></script>
+    </body>
+</html>
