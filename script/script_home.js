@@ -23,6 +23,31 @@ $(document).ready(function(){
     	};
     });
 
+    /**
+ 	 * @brief Funzione che disconnette l'utente e lo rimanda alla pagina principale
+ 	 */
+    $("#exit").click(function(){
+        //creo una request
+    	var xhr = new XMLHttpRequest();
+    	var url = "http://127.0.0.1:5000/exit";
+    	xhr.open("post", url, true);
+    	xhr.send();
+    	//procedura per ricevere il JSON
+    	xhr.onloadend = function (){
+	        var result = xhr.responseText;
+	        result = JSON.parse(result);
+	        //se l'utente si disconnette correttamente viene rimandato alla home.html
+	        if(result.answer == true){
+	            alert("LogOut effettuato con successo");
+	            window.location.href = '../html/home.html';
+	        }
+	        //altrimenti mostra un alert
+	        else{
+	            alert("impossibile effettuare il LogOut");
+	        }
+    	};
+    });
+
 });
 
 /**
