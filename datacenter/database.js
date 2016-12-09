@@ -32,5 +32,4 @@ var login_check = function (){
 
 
 //exports delle funzioni
-exports.loginCheck = login_check; 
-exports.exit = login_exit;
+exports.loginCheck = login_check;
