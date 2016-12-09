@@ -31,7 +31,7 @@ home.html
 registrazione.html
 ```
  - Contiene un **form** da compilare:
-	 - **Email** deve rispettare la sintassi *example@domani.com* e non deve essere già presente nel database;
+	 - **Email** deve rispettare la sintassi *example@domain.com* e non deve essere già presente nel database;
 	 - **Name** e **Surname** non devono contenere numeri;
  - Bottone **Registrati** per inviare i dati al server;
  - Bottone **Indietro** per tornare alla pagina precedente.
@@ -67,4 +67,19 @@ add_petizione.html
  - Bottone **Ok** per inviare i dati al server;
  Se la petizione viene inserita con successo si viene indirizzati alla pagina `petizioni.html`.
  
- 
+## Test
+Abbiamo effettuato i test durante lo sviluppo. Solo se questi risultavano positivi proseguivamo con lo sviluppo.
+Sono state testate le funzionalità:
+ - `database.js` che contiene gli utenti
+ - `database_petizioni.js` che contiene le petizioni
+ - `server.js` ovvero il server nodeJS e gli header di risposta alle varie richieste
+  
+## API
+Abbiamo realizzato, tramite http://editor.swagger.io, le API sulle funzionalità del server:
+ - /login_check
+ - /registrazione
+ - /login
+ - /exit
+ - /add_check_petizioni
+ - /add_petizione
+ - /load_petizioni
