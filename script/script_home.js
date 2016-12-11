@@ -58,6 +58,10 @@ function changeColorIN(x) {
     x.style.backgroundColor = "#3399ff";
 }
 
+function changeColorINgray(x) {
+    x.style.backgroundColor = "#9fa1a5";
+}
+
 /**
  * @brief Funzione che cambia lo sfondo, invocata quando il mouse non è più sopra l'oggetto x.
  * @param [in] x Rappresenta l'oggetto a cui intendo modificare lo sfondo.
