@@ -87,3 +87,7 @@ Abbiamo realizzato, tramite http://editor.swagger.io, le API sulle funzionalità
 
 ## Guida user-friendly
 Un nuovo utente per prima cosa deve cliccare su **registrati** per creare un nuovo account. Poi, tramite il bottone **login** potrà effettuare l'accesso con le credenziali da lui scelte. A questo punto può accedere alle petizioni, cliccando sull'immagine relativa. Nella pagina delle petizioni, queste verranno mostrate solo dopo che l'utente ha scelto una categoria da visionare (tutte, università, città) tramite il relativo bottone. Dopo aver caricato le petizioni, se l'utente è interessato, potrà contribuire alla causa segnandosi come partecipe (vedrà il contatore della petizione che aumenta) o, viceversa, potrà ritirare la partecipazione se cambia idea. L'utente può aggiungere una petizione indicando il titolo, descrizione e la tipologia. Infine, tramite il bottone **Exit** potrà effettuare il logout.
+
+
+## Code Review
+https://docs.google.com/document/d/1qHqldvig_bEHdNASaQMXJcRFb5dBZng1cqQc3PwunAs/edit?usp=sharing
