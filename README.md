@@ -90,3 +90,4 @@ Un nuovo utente per prima cosa deve cliccare su **registrati** per creare un nuo
 
 ## Code Review
 https://docs.google.com/document/d/1qHqldvig_bEHdNASaQMXJcRFb5dBZng1cqQc3PwunAs/edit?usp=sharing
+La revisione è stata fatta mediante i commenti fluttuanti. E' necessario cliccare sul commento per visualizzare la parte a cui si riferisce.
