@@ -55,7 +55,7 @@ function registrazione(){
         data["password"] = password;
         //creo una request
     	var xhr = new XMLHttpRequest();
-    	var url = "http://127.0.0.1:5000/registrazione";
+    	var url = "/registrazione";
     	xhr.open("post", url, true);
     	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     	// spedire i dati come json

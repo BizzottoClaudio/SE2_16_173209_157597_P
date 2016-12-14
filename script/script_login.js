@@ -32,7 +32,7 @@ var login = function (){
         data["password"] = password;
         //creo una request
     	var xhr = new XMLHttpRequest();
-    	var url = "http://127.0.0.1:5000/login";
+    	var url = "/login";
     	xhr.open("post", url, true);
     	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     	// spedisco i dati come JSON

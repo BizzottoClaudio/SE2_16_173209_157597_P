@@ -50,7 +50,7 @@ function add_petizione(){
         data['type'] = type;
         //creo una request
         var xhr = new XMLHttpRequest();
-        var url = "http://127.0.0.1:5000/add_petizione";
+        var url = "/add_petizione";
         xhr.open("post", url, true);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         // spedire i dati come json

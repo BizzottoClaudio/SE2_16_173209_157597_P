@@ -5,7 +5,7 @@ $(document).ready(function(){
     $("#exit").click(function(){
         //creo una request
         var xhr = new XMLHttpRequest();
-        var url = "http://127.0.0.1:5000/exit";
+        var url = "/exit";
         xhr.open("post", url, true);
         xhr.send();
         //procedura per ricevere il JSON
@@ -40,7 +40,7 @@ $(document).ready(function(){
         }
         //creo una request
         var xhr = new XMLHttpRequest();
-        var url = "http://127.0.0.1:5000/load_petizioni";
+        var url = "/load_petizioni";
         xhr.open("post", url, true);
         xhr.send();
         //procedura per ricevere il JSON
@@ -97,7 +97,7 @@ $(document).ready(function(){
         }
         //creo una request
         var xhr = new XMLHttpRequest();
-        var url = "http://127.0.0.1:5000/load_petizioni";
+        var url = "/load_petizioni";
         xhr.open("post", url, true);
         xhr.send();
         //procedura per ricevere il JSON
@@ -168,7 +168,7 @@ $(document).ready(function(){
         }
         //creo una request
         var xhr = new XMLHttpRequest();
-        var url = "http://127.0.0.1:5000/load_petizioni";
+        var url = "/load_petizioni";
         xhr.open("post", url, true);
         xhr.send();
         //procedura per ricevere il JSON
@@ -235,7 +235,7 @@ function add_check_petizioni(x){
     data['title'] = petiz_title;
     //creo una request
     var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:5000/add_check_petizioni";
+    var url = "/add_check_petizioni";
     xhr.open("post", url, true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     //spedisco il JSON

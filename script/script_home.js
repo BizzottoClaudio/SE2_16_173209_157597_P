@@ -5,7 +5,7 @@ $(document).ready(function(){
     $("#petizioni_image").click(function(){
         //creo una request
     	var xhr = new XMLHttpRequest();
-    	var url = "http://127.0.0.1:5000/login_check";
+    	var url = "/login_check";
     	xhr.open("post", url, true);
     	xhr.send();
     	//procedura per ricevere il JSON
@@ -29,7 +29,7 @@ $(document).ready(function(){
     $("#exit").click(function(){
         //creo una request
     	var xhr = new XMLHttpRequest();
-    	var url = "http://127.0.0.1:5000/exit";
+    	var url = "/exit";
     	xhr.open("post", url, true);
     	xhr.send();
     	//procedura per ricevere il JSON
