@@ -73,7 +73,17 @@ Sono state testate le funzionalità:
  - `database.js` che contiene gli utenti
  - `database_petizioni.js` che contiene le petizioni
  - `server.js` ovvero il server nodeJS e gli header di risposta alle varie richieste
-  
+ 
+I test vanno eseguiti in locale, previa installazione delle librerie:
+ - `npm install express --save`
+ - `npm install body-parser --save`
+ - `npm install cors --save`
+ - `npm install util --save`
+ - `npm install request --save`
+ - `npm install request-json --save`
+ - `npm install jasmine`
+
+
 ## API
 Abbiamo realizzato, tramite http://editor.swagger.io, le API sulle funzionalità del server:
  - /login_check
