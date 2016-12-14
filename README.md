@@ -18,7 +18,7 @@ Funzionalità implementate:
  - *Esci*: è possibile eseguire il logout dall'account.
 
 ## Link heroku
-
+https://salty-tor-77430.herokuapp.com
 
 ## Dettagli tecnici
 ```
