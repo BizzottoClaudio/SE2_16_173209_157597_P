@@ -19,11 +19,11 @@ function add_petizione(){
     }else if(title == '' || !isNaN(parseInt(title)) || hasNumber.test(title)){
         $("#title").css("background-color", "#FFB6C1");
         $("#description").css("background-color", "");
-        alert("inserire un pasametro title valido: no numeri");
+        alert("inserire un parametro title valido: no numeri");
     }else if(description == '' || !isNaN(parseInt(description))){
         $("#description").css("background-color", "#FFB6C1");
         $("#title").css("background-color", "");
-        alert("inserire un pasametro description valido: non è concesso inserire solo numeri");
+        alert("inserire un parametro description valido: non è concesso inserire solo numeri");
     }else if(universita.checked && citta.checked){
         $("#title").css("background-color", "");
         $("#description").css("background-color", "");

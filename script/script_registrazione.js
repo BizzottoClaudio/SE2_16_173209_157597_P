@@ -24,19 +24,19 @@ function registrazione(){
         $("#surname").css("background-color", "");
         $("#email").css("background-color", "");
         $("#password").css("background-color", "");
-        alert("inserire un pasametro name valido: no numeri");
+        alert("inserire un parametro name valido: no numeri");
     }else if(surname == '' || !isNaN(parseInt(surname)) || hasNumber.test(surname)){
         $("#surname").css("background-color", "#FFB6C1");
         $("#name").css("background-color", "");
         $("#email").css("background-color", "");
         $("#password").css("background-color", "");
-        alert("inserire un pasametro surname valido: no numeri");
+        alert("inserire un parametro surname valido: no numeri");
     }else if(email == '' || !vincolo_email.test(email)){
         $("#email").css("background-color", "#FFB6C1");
         $("#surname").css("background-color", "");
         $("#name").css("background-color", "");
         $("#password").css("background-color", "");
-        alert("inserire un pasametro email valido");
+        alert("inserire un parametro email valido (es: asd@asd.it)");
     }else if(password == ''){
         $("#password").css("background-color", "#FFB6C1");
         $("#email").css("background-color", "");

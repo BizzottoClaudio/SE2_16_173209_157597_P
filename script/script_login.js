@@ -17,7 +17,7 @@ var login = function (){
     }else if(email == '' || !vincolo_email.test(email)){
         $("#email").css("background-color", "#FFB6C1");
         $("#password").css("background-color", "");
-        alert("inserire un pasametro email valido");
+        alert("inserire un parametro email valido (es: asd@asd.it)");
     }else if(password == ''){
         $("#password").css("background-color", "#FFB6C1");
         $("#email").css("background-color", "");
