@@ -14,7 +14,6 @@ describe("Test /login_check", function() {
                 expect(response.statusCode).toBe(200);
                 done();
             });
-        
     }); 
 });
 
