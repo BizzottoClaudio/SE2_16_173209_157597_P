@@ -4,7 +4,7 @@ info:
   description: definizione API applicazione
   version: "1.0.0"
 # the domain of the service
-host: https://salty-tor-77430.herokuapp.com
+host: salty-tor-77430.herokuapp.com
 # array of all schemes that your API supports
 schemes:
   - https
