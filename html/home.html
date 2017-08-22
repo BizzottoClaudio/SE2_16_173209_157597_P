@@ -1,75 +1,115 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Use Bing Maps REST Services with jQuery to build an autocomplete box and find a location dynamically</title>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js" type="text/javascript"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.js" type="text/javascript"></script>
-    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .ui-autocomplete-loading
-        {
-            background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-        }
-        #searchBox
-        {
-            width: 25em;
-        }
-    </style>
+    <title>Bing Search API</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#searchBox").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "http://dev.virtualearth.net/REST/v1/Locations",
-                        dataType: "jsonp",
-                        data: {
-                            key: "<yourbingmapskey>",
-                            q: request.term
-                        },
-                        jsonp: "jsonp",
-                        success: function (data) {
-                            var result = data.resourceSets[0];
-                            if (result) {
-                                if (result.estimatedTotal > 0) {
-                                    response($.map(result.resources, function (item) {
-                                        return {
-                                            data: item,
-                                            label: item.name + ' (' + item.address.countryRegion + ')',
-                                            value: item.name
-                                        }
-                                    }));
-                                }
-                            }
-                        }
-                    });
-                },
-                minLength: 1,
-                change: function (event, ui) {
-                    if (!ui.item)
-                        $("#searchBox").val('');
-                },
-                select: function (event, ui) {
-                    displaySelectedItem(ui.item.data);
-                }
-            });
-        });
+        (function($) {
+            $.bingSearch = function(option) {
 
-        function displaySelectedItem(item) {
-            $("#searchResult").empty().append('Result: ' + item.name).append(' (Latitude: ' + item.point.coordinates[0] + ' Longitude: ' + item.point.coordinates[1] + ')');
-        }
+                let bingApiUrl = 'https://api.cognitive.microsoft.com/bingcustomsearch/v5.0/search';
+                var options = $.extend({
+                    'keyword': '',
+                    'apiKey': 'cec6ad153d06454bb8a35f5387c39402',
+                }, option || {});
+
+                $.ajax({
+                    url: bingApiUrl,
+                    data: {
+                        'q': options.keyword,
+                        count: 5,
+                        customconfig: 1447398313,
+                    },
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': options.apiKey
+                    },
+                    success: function(response) {
+                        if ($.isFunction(options.onSuccess)) {
+                            options.onSuccess.call(this, response);
+                        }
+                    },
+                    error: function(response) {
+                        console.log(response.responseJSON);
+                        return;
+                    }
+                });
+            }
+        })(jQuery);
     </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.find').click(function() {
+                $.bingSearch({
+                    apiKey: 'cec6ad153d06454bb8a35f5387c39402',
+                    keyword: $('.keyword').val(),
+                    
+                    //inserisce nel DIV i valori trovati
+                    onSuccess: function(response) {
+                        var data = response.webPages.value;
+                        $('.result').html('');
+                        for (var i = 0; i < data.length; i++) {
+                            let situs = data[i];
+                            let element = `
+                                <div class="siteList">
+                                <a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
+                                <span class="displayUrl">${situs.displayUrl}</span> <br/> 
+                                ${situs.snippet}
+                                </div>
+                            `;
+                            $('.result').append(element);
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+
+    <style type="text/css">
+        body {
+            font-family: Arial;
+        }
+
+        input {
+            padding: 10px;
+            width: 400px;
+        }
+
+        button {
+            padding: 11px;
+            background: blue;
+            border: blue;
+            color: white;
+            font-weight: bold;
+        }
+
+        .siteList {
+            padding: 0px 20px;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .siteList a {
+            color: blue;
+        }
+
+        .siteList .displayUrl {
+            color: #019030;
+        }
+    </style>
 </head>
+
 <body>
-    <div>
-        <div class="ui-widget">
-            <label for="searchBox">
-                Search:
-            </label>
-            <input id="searchBox" />
-        </div>
-        <div id="searchResult" class="ui-widget" style="margin-top: 1em;">
-        </div>
-    </div>
+    <input type="text" class="keyword" placeholder="Scrivi qualcosa da cercare">
+    <button class="find">GO</button>
+    <hr/>
+    <div class="result"></div>
 </body>
+
+
 </html>
