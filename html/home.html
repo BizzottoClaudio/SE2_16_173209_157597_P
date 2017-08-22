@@ -20,7 +20,8 @@
                         'q': options.keyword,
                     },
                     headers: {
-                        'Ocp-Apim-Subscription-Key': options.apiKey
+                        'Ocp-Apim-Subscription-Key': options.apiKey,
+                        count: 5
                     },
                     success: function(response) {
                         if ($.isFunction(options.onSuccess)) {
@@ -39,19 +40,20 @@
         $(function() {
             $('.find').click(function() {
                 $.bingSearch({
-                    apiKey: 'fe3b8ed6b3f7446baa564c83efb1f931',
+                    apiKey: '5f793a06f6124a029b96506e9a009461',
                     keyword: $('.keyword').val(),
+                    count: 5,
                     onSuccess: function(response) {
                         var data = response.webPages.value;
                         $('.result').html('');
                         for (var i = 0; i < data.length; i++) {
                             let situs = data[i];
                             let element = `
-                            	<div class="siteList">
-                             	<a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
-                             	<span class="displayUrl">${situs.displayUrl}</span> <br/> 
-                             	${situs.snippet}
-                            	</div>
+                                <div class="siteList">
+                                <a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
+                                <span class="displayUrl">${situs.displayUrl}</span> <br/> 
+                                ${situs.snippet}
+                                </div>
                             `;
                             $('.result').append(element);
                         }
@@ -99,10 +101,11 @@
 </head>
 
 <body>
+    <input type="text" class="keyword" placeholder="Scrivi qualcosa da cercare">
+    <button class="find">GO</button>
+    <hr/>
+    <div class="result"></div>
 </body>
-<input type="text" class="keyword" placeholder="Masukan Kata Kunci">
-<button class="find">CARI</button>
-<hr/>
-<div class="result"></div>
+
 
 </html>
