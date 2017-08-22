@@ -18,10 +18,10 @@
                     url: bingApiUrl,
                     data: {
                         'q': options.keyword,
+                        count: 5,
                     },
                     headers: {
-                        'Ocp-Apim-Subscription-Key': options.apiKey,
-                        count: 5
+                        'Ocp-Apim-Subscription-Key': options.apiKey
                     },
                     success: function(response) {
                         if ($.isFunction(options.onSuccess)) {
@@ -42,7 +42,7 @@
                 $.bingSearch({
                     apiKey: '5f793a06f6124a029b96506e9a009461',
                     keyword: $('.keyword').val(),
-                    count: 5,
+                    
                     onSuccess: function(response) {
                         var data = response.webPages.value;
                         $('.result').html('');
