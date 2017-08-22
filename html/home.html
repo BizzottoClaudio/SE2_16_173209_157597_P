@@ -1,133 +1,108 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" />  
-        <link rel="stylesheet" href="../style/style_home.css"> 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <title>TN & UniTN</title> 
-    </head>
-    <body>
-        <br><br>
-    
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-2 col-xs-1"></div>
-                <div class="col-md-6 col-sm-8 col-xs-10 colonna2">
-                    <br>
 
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <button class="btn btn-default" id="registrazione" style="display: block"><a href ="../html/registrazione.html">Registrati</a></button>
-                        </div>
-                        <div class="col-md-2 text-center">
-                            <button class="btn btn-default" id="login" style="display: block"><a href="../html/login.html">LogIn</a></button>
-                        </div>
-                    </div>
+<head>
+    <title>Bing Search API</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        (function($) {
+            $.bingSearch = function(option) {
 
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h1><b>TN & UniTN</b></h1>
-                        </div>
-                    </div>
+                let bingApiUrl = 'https://api.cognitive.microsoft.com/bing/v5.0/search';
+                var options = $.extend({
+                    'keyword': '',
+                    'apiKey': '5f793a06f6124a029b96506e9a009461',
+                }, option || {});
 
-                    <hr align=”left” size=”1″ width=”300″ style="border-top-color: grey;" noshade>
+                $.ajax({
+                    url: bingApiUrl,
+                    data: {
+                        'q': options.keyword,
+                    },
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': options.apiKey
+                    },
+                    success: function(response) {
+                        if ($.isFunction(options.onSuccess)) {
+                            options.onSuccess.call(this, response);
+                        }
+                    },
+                    error: function(response) {
+                        console.log(response.responseJSON);
+                        return;
+                    }
+                });
+            }
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('.find').click(function() {
+                $.bingSearch({
+                    apiKey: 'fe3b8ed6b3f7446baa564c83efb1f931',
+                    keyword: $('.keyword').val(),
+                    onSuccess: function(response) {
+                        var data = response.webPages.value;
+                        $('.result').html('');
+                        for (var i = 0; i < data.length; i++) {
+                            let situs = data[i];
+                            let element = `
+                            	<div class="siteList">
+                             	<a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
+                             	<span class="displayUrl">${situs.displayUrl}</span> <br/> 
+                             	${situs.snippet}
+                            	</div>
+                            `;
+                            $('.result').append(element);
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+        }
 
-                    <div class="row text-center">
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/orari.png" alt="orari" >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/social.png" alt="social" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 ">
-                            <div class="panel panel-default color-bg" onmouseover="changeColorIN(this)" onmouseout="changeColorOUT(this)">
-                                <div class="panel-body">
-                                    <img src="../images/petizioni.png" id="petizioni_image" alt="petizioni" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/calendario.png" alt="calendario" >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/lezioni_aperte.png" alt="lezioni aperte" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        input {
+            padding: 10px;
+            width: 400px;
+        }
 
-                    <div class="row text-center">
-                        <div class="col-md-6 ">
-                            <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                <div class="panel-body" >
-                                    <img src="../images/mappaBIG.png" alt="mappa" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 ">
-                            <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                <div class="panel-body">                                    
-                                    <img src="../images/tour_matricola.png" alt="tour matricola" >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        button {
+            padding: 11px;
+            background: blue;
+            border: blue;
+            color: white;
+            font-weight: bold;
+        }
 
-                    <div class="row text-center">
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/avvisi.png" alt="avvisi" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-12 ">
-                                    <div class="panel panel-default color-bg" onmouseover="changeColorINgray(this)" onmouseout="changeColorOUT(this)">
-                                        <img src="../images/mensa.png" alt="mensa" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        .siteList {
+            padding: 0px 20px;
+            margin-bottom: 20px;
+        }
 
-                     <div class="row text-center">
-                        <div class="col-md-9 "></div>
-                        <div class="col-md-2 ">
-                            <img class="img-circle" src="../images/add_btn.jpg" alt="" onmouseover="changeColorIN(this)" onmouseout="changeColorOUT(this)">
-                        </div>
-                    </div>
-                    <br>
-                </div>
-                <div class="col-md-3 col-sm-2 col-xs-1"></div>
-            </div>
-            <br>
-        </div> 
+        hr {
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
 
-        <script src="../script/script_home.js"></script> 
+        .siteList a {
+            color: blue;
+        }
 
-    </body>
+        .siteList .displayUrl {
+            color: #019030;
+        }
+    </style>
+</head>
+
+<body>
+</body>
+<input type="text" class="keyword" placeholder="Masukan Kata Kunci">
+<button class="find">CARI</button>
+<hr/>
+<div class="result"></div>
+
 </html>
