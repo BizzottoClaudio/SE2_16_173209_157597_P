@@ -10,7 +10,7 @@
                 let bingApiUrl = 'https://api.cognitive.microsoft.com/bingcustomsearch/v5.0/search';
                 var options = $.extend({
                     'keyword': '',
-                    'apiKey': '5f793a06f6124a029b96506e9a009461',
+                    'apiKey': '892ff780ade945b383fd993ee92ed6f0',
                 }, option || {});
 
                 $.ajax({
@@ -40,7 +40,7 @@
         $(function() {
             $('.find').click(function() {
                 $.bingSearch({
-                    apiKey: '5f793a06f6124a029b96506e9a009461',
+                    apiKey: '892ff780ade945b383fd993ee92ed6f0',
                     keyword: $('.keyword').val(),
                     
                     onSuccess: function(response) {
