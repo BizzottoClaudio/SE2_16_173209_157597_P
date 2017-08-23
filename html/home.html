@@ -1,49 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bing Search v5 - Simple, show fewer results</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-</head>
-<body>
+    <title>Bing Search API</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.js" type="text/javascript"></script>
+    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-// more info: http://mvark.blogspot.com/2016/06/how-to-use-bing-search-v5-api-with.html
-	var total;
-	var results = '';
-// In this sample, I'm trying to find the pages of my blog that Bing has indexed with the "site:" operator with the "q" parameter
-//For more info on the other querystring parameters refer to the documentation - https://bingapis.portal.azure-api.net/docs/services/56b43eeccf5ff8098cef3807/operations/56b4447dcf5ff8098cef380d
-    $(function() {
-        var params = {
-            // Request parameters
-            "q": "site:www.sanmartino.com",
-            "count": "50",
-            "offset": "0",
-            //"safesearch": "Moderate",
-        };
-        $.ajax({
-            url: "https://api.cognitive.microsoft.com/bing/v5.0?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","5f793a06f6124a029b96506e9a009461"); //replace value with your own key
-            },
-            type: "GET",
-            // Request body
-            //data: "{body}",
+    <script type="text/javascript">
+        (function($) {
+            $.bingSearch = function(option) {
+
+                let bingApiUrl = 'https://api.cognitive.microsoft.com/bingcustomsearch/v5.0/search';
+                var options = $.extend({
+                    'keyword': '',
+                    'apiKey': 'cec6ad153d06454bb8a35f5387c39402',
+                }, option || {});
+
+                $.ajax({
+                    url: bingApiUrl,
+                    data: {
+                        'q': "site:www.sanmartino.com " + options.keyword,
+                        count: 5,
+                        customconfig: 1447398313,
+                    },
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': options.apiKey
+                    },
+                    success: function(response) {
+                        if ($.isFunction(options.onSuccess)) {
+                            options.onSuccess.call(this, response);
+                        }
+                    },
+                    error: function(response) {
+                        console.log(response.responseJSON);
+                        return;
+                    }
+                });
+            }
+        })(jQuery);
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.find').click(function() {
+                $.bingSearch({
+                    apiKey: 'cec6ad153d06454bb8a35f5387c39402',
+                    keyword: $('.keyword').val(),
+                    
+                    //inserisce nel DIV i valori trovati
+                    onSuccess: function(response) {
+                        var data = response.webPages.value;
+                        $('.result').html('');
+                        for (var i = 0; i < data.length; i++) {
+                            let situs = data[i];
+                            let element = `
+                                <div class="siteList">
+                                <a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
+                                <span class="displayUrl">${situs.displayUrl}</span> <br/> 
+                                ${situs.snippet}
+                                </div>
+                            `;
+                            $('.result').append(element);
+                        }
+                    }
+                });
+            });
         })
-        .done(function(data) {
-		len = data.webPages.value.length
-		for (i=0; i<len; i++ )
-		{
-		   results += "<p><a href='" + data.webPages.value[i].url + "'>" + data.webPages.value[i].name + "</a>: " + data.webPages.value[i].snippet + "</p>";
-		}
-		$('#content').html(results);
-        })
-        .fail(function() {
-            alert("error");
-        });
-    });
-</script>
-Results:
- <div id="content">Fetching...</div>
+    </script>
+
+    <style type="text/css">
+        body {
+            font-family: Arial;
+        }
+
+        input {
+            padding: 10px;
+            width: 400px;
+        }
+
+        button {
+            padding: 11px;
+            background: blue;
+            border: blue;
+            color: white;
+            font-weight: bold;
+        }
+
+        .siteList {
+            padding: 0px 20px;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .siteList a {
+            color: blue;
+        }
+
+        .siteList .displayUrl {
+            color: #019030;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" class="keyword" placeholder="Scrivi qualcosa da cercare" id="searchBox">
+    <button class="find">GO</button>
+    <hr/>
+    <div class="result"></div>
 </body>
+
+
 </html>
