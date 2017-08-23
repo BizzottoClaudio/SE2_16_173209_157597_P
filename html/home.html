@@ -1,64 +1,51 @@
+<!DOCTYPE html>
 <html>
-<script type="text/javascript">
-  'use strict';
-
-$(document).ready(function() {
-  //Declare variables
-  var $searchButton = $('#searchButton');
-  //add a colon to the beginning of your AppId string
-  var appId = ':5f793a06f6124a029b96506e9a009461';
-
-  //Function to get images
-  function getImage() {
-    //base64 encode the AppId
-    var azureKey = btoa(appId);
-    //get the value from the search box
-    var $searchQuery = $('#searchBox').val();
-    //Create the search string
-    var myUrl = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite?Sources=%27image%27&$top=50&$format=json&Query=%27' + $searchQuery + '%27';
-    //Make post request to bing
-    $.ajax({
-      method: 'post',
-      url: myUrl,
-      //Set headers to authorize search with Bing
-      headers: {
-        'Authorization': 'Basic ' + azureKey
-      },
-      success: function(data) {
-        //Insert random image in dom
-        var randomIndex = Math.floor(Math.random() * 50);
-        var imgLink = '<img width="500px" src="' + data.d.results[0].Image[randomIndex].MediaUrl + '" />';
-        $('#output').html(imgLink);
-      },
-      failure: function(err) {
-        console.error(err);
-      }
-    });
-  };
-  //Trigger function when button is clicked
-  $searchButton.click(function(e) {
-    e.preventDefault();
-    getImage();
-  });
-});
-</script>
 <head>
-  <title>Image search widget</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="test search widget" />
+    <title>Bing Search v5 - Simple, show fewer results</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
-
 <body>
-  <main>
-    <form>
-      <input id="searchBox" type="text" type="submit" name="searchBox" required/>
-      <button id="searchButton" type="submit">Get Image</button>
-    </form>
-    <div id="output"></div>
-  </main>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="./js/search.js"></script>
-</body>
 
+<script type="text/javascript">
+// more info: http://mvark.blogspot.com/2016/06/how-to-use-bing-search-v5-api-with.html
+	var total;
+	var results = '';
+// In this sample, I'm trying to find the pages of my blog that Bing has indexed with the "site:" operator with the "q" parameter
+//For more info on the other querystring parameters refer to the documentation - https://bingapis.portal.azure-api.net/docs/services/56b43eeccf5ff8098cef3807/operations/56b4447dcf5ff8098cef380d
+    $(function() {
+        var params = {
+            // Request parameters
+            "q": "site:mvark.blogspot.com",
+            "count": "50",
+            "offset": "0",
+            "mkt": "en-us",
+            //"safesearch": "Moderate",
+	    "freshness":"Week",
+        };
+        $.ajax({
+            url: "https://bingapis.azure-api.net/api/v5/search/?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","abc123"); //replace value with your own key
+            },
+            type: "GET",
+            // Request body
+            //data: "{body}",
+        })
+        .done(function(data) {
+		len = data.webPages.value.length
+		for (i=0; i<len; i++ )
+		{
+		   results += "<p><a href='" + data.webPages.value[i].url + "'>" + data.webPages.value[i].name + "</a>: " + data.webPages.value[i].snippet + "</p>";
+		}
+		$('#content').html(results);
+        })
+        .fail(function() {
+            alert("error");
+        });
+    });
+</script>
+Results:
+ <div id="content">Fetching...</div>
+</body>
 </html>
