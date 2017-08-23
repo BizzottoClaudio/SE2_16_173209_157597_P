@@ -21,7 +21,7 @@
             //"safesearch": "Moderate",
         };
         $.ajax({
-            url: "https://bingapis.azure-api.net/api/v5/search/?" + $.param(params),
+            url: "https://api.cognitive.microsoft.com/bing/v5.0?" + $.param(params),
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","5f793a06f6124a029b96506e9a009461"); //replace value with your own key
