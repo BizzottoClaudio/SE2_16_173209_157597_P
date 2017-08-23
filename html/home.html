@@ -1,118 +1,64 @@
-<!DOCTYPE html>
 <html>
+<script type="text/javascript">
+  'use strict';
+
+$(document).ready(function() {
+  //Declare variables
+  var $searchButton = $('#searchButton');
+  //add a colon to the beginning of your AppId string
+  var appId = ':5f793a06f6124a029b96506e9a009461';
+
+  //Function to get images
+  function getImage() {
+    //base64 encode the AppId
+    var azureKey = btoa(appId);
+    //get the value from the search box
+    var $searchQuery = $('#searchBox').val();
+    //Create the search string
+    var myUrl = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite?Sources=%27image%27&$top=50&$format=json&Query=%27' + $searchQuery + '%27';
+    //Make post request to bing
+    $.ajax({
+      method: 'post',
+      url: myUrl,
+      //Set headers to authorize search with Bing
+      headers: {
+        'Authorization': 'Basic ' + azureKey
+      },
+      success: function(data) {
+        //Insert random image in dom
+        var randomIndex = Math.floor(Math.random() * 50);
+        var imgLink = '<img width="500px" src="' + data.d.results[0].Image[randomIndex].MediaUrl + '" />';
+        $('#output').html(imgLink);
+      },
+      failure: function(err) {
+        console.error(err);
+      }
+    });
+  };
+  //Trigger function when button is clicked
+  $searchButton.click(function(e) {
+    e.preventDefault();
+    getImage();
+  });
+});
+</script>
 <head>
-    <title>Bing Search API</title>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js" type="text/javascript"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.js" type="text/javascript"></script>
-    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        (function($) {
-            $.bingSearch = function(option) {
-
-                let bingApiUrl = 'https://api.cognitive.microsoft.com/bingcustomsearch/v5.0/search';
-                var options = $.extend({
-                    'keyword': '',
-                    'apiKey': 'cec6ad153d06454bb8a35f5387c39402',
-                }, option || {});
-
-                $.ajax({
-                    url: bingApiUrl,
-                    data: {
-                        'q': options.keyword,
-                        count: 5,
-                        customconfig: 1447398313,
-                    },
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': options.apiKey
-                    },
-                    success: function(response) {
-                        if ($.isFunction(options.onSuccess)) {
-                            options.onSuccess.call(this, response);
-                        }
-                    },
-                    error: function(response) {
-                        console.log(response.responseJSON);
-                        return;
-                    }
-                });
-            }
-        })(jQuery);
-    </script>
-
-    <script type="text/javascript">
-        $(function() {
-            $('.find').click(function() {
-                $.bingSearch({
-                    apiKey: 'cec6ad153d06454bb8a35f5387c39402',
-                    keyword: $('.keyword').val(),
-                    
-                    //inserisce nel DIV i valori trovati
-                    onSuccess: function(response) {
-                        var data = response.webPages.value;
-                        $('.result').html('');
-                        for (var i = 0; i < data.length; i++) {
-                            let situs = data[i];
-                            let element = `
-                                <div class="siteList">
-                                <a href="${situs.url}" target="_blank">${situs.name}</a> <br/>
-                                <span class="displayUrl">${situs.displayUrl}</span> <br/> 
-                                ${situs.snippet}
-                                </div>
-                            `;
-                            $('.result').append(element);
-                        }
-                    }
-                });
-            });
-        })
-    </script>
-
-    <style type="text/css">
-        body {
-            font-family: Arial;
-        }
-
-        input {
-            padding: 10px;
-            width: 400px;
-        }
-
-        button {
-            padding: 11px;
-            background: blue;
-            border: blue;
-            color: white;
-            font-weight: bold;
-        }
-
-        .siteList {
-            padding: 0px 20px;
-            margin-bottom: 20px;
-        }
-
-        hr {
-            border: none;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .siteList a {
-            color: blue;
-        }
-
-        .siteList .displayUrl {
-            color: #019030;
-        }
-    </style>
+  <title>Image search widget</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="test search widget" />
 </head>
 
 <body>
-    <input type="text" class="keyword" placeholder="Scrivi qualcosa da cercare" id="searchBox">
-    <button class="find">GO</button>
-    <hr/>
-    <div class="result"></div>
+  <main>
+    <form>
+      <input id="searchBox" type="text" type="submit" name="searchBox" required/>
+      <button id="searchButton" type="submit">Get Image</button>
+    </form>
+    <div id="output"></div>
+  </main>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="./js/search.js"></script>
 </body>
-
 
 </html>
