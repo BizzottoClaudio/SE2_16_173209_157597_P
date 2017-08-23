@@ -11,7 +11,7 @@
         (function($) {
             $.bingSearch = function(option) {
 
-                let bingApiUrl = 'https://api.cognitive.microsoft.com/bingcustomsearch/v5.0/search';
+                let bingApiUrl = 'https://api.cognitive.microsoft.com/bing/v5.0/search';
                 var options = $.extend({
                     'keyword': '',
                     'apiKey': 'cec6ad153d06454bb8a35f5387c39402',
@@ -22,7 +22,7 @@
                     data: {
                         'q': "site:www.sanmartino.com " + options.keyword,
                         count: 5,
-                        customconfig: 1447398313,
+                        //customconfig: 1447398313,
                     },
                     headers: {
                         'Ocp-Apim-Subscription-Key': options.apiKey
