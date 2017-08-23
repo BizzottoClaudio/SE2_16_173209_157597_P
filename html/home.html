@@ -15,18 +15,16 @@
     $(function() {
         var params = {
             // Request parameters
-            "q": "site:mvark.blogspot.com",
+            "q": "site:www.sanmartino.com",
             "count": "50",
             "offset": "0",
-            "mkt": "en-us",
             //"safesearch": "Moderate",
-	    "freshness":"Week",
         };
         $.ajax({
             url: "https://bingapis.azure-api.net/api/v5/search/?" + $.param(params),
             beforeSend: function(xhrObj){
                 // Request headers
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","abc123"); //replace value with your own key
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","5f793a06f6124a029b96506e9a009461"); //replace value with your own key
             },
             type: "GET",
             // Request body
